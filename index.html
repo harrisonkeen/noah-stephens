@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="en" data-marks="label" data-reel="tv" data-doodles="on">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Noah Stephens — Actor</title>
+<meta name="description" content="Noah Stephens, actor. Scenes, roles, headshots and credits.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Figtree:ital,wght@0,400;0,600;0,800;1,400&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,500..800,0..100,0..1;1,9..144,500..800,0..100,0..1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --hero: #bebebe;       /* sampled from the headshot's studio backdrop, so photo and page meet without a seam */
+    --paper: #f7f3ea;      /* page */
+    --band: #f3e1a0;       /* butter: the living-room walls in his first demo scene (v1 shade, back in v3) */
+    --band-ink: #b8973a;   /* the butter's own shadow: the crayon hatching */
+    --mist: #e3e2dd;       /* headshots band: a pale step of the hero grey */
+    --ink: #24252b;        /* text, footer */
+    --ink-soft: #5c5d66;
+    --accent: #2c50d4;     /* biro blue: buttons, links, the marker */
+    --on-accent: #fff;
+    --gutter: clamp(16px, 5vw, 72px);
+    --text: "Figtree", "Helvetica Neue", Arial, sans-serif;
+    --display: "Fraunces", Georgia, serif;
+    --display-style: italic;
+    --display-weight: 700;
+    --display-axes: "SOFT" 100, "WONK" 1;
+    --marker: "Caveat", "Comic Sans MS", cursive;
+    --spring: cubic-bezier(.34, 1.56, .64, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { background: var(--paper); color: var(--ink); scroll-behavior: smooth; overflow-x: clip; }
+  html.at-end { background: var(--ink); }
+  body { margin: 0; font: 400 18px/1.6 var(--text); -webkit-font-smoothing: antialiased; background: var(--paper); overflow-x: clip; }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+  .wrap { width: min(100% - 2 * var(--gutter), 1200px); margin-inline: auto; }
+  .display { font-family: var(--display); font-style: var(--display-style); font-weight: var(--display-weight); font-variation-settings: var(--display-axes); line-height: .95; margin: 0; letter-spacing: -.01em; }
+
+  /* Buttons: the only full-strength accent on the page */
+  .pill {
+    display: inline-flex; align-items: center; gap: 10px; padding: 14px 24px; border-radius: 999px;
+    font-weight: 800; text-decoration: none; border: 2px solid var(--ink); background: var(--accent); color: var(--on-accent);
+    box-shadow: 0 4px 0 var(--ink); transition: transform .25s var(--spring), box-shadow .25s var(--spring);
+  }
+  .pill:hover { transform: translateY(-3px); box-shadow: 0 7px 0 var(--ink); }
+  .pill:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+  .pill.ghost { background: var(--paper); color: var(--ink); }
+  .pill svg { width: 12px; flex: none; }
+  .pill .ig { width: 18px; }
+
+  /* ---------- Hero: name on the grey, the headshot on the right, a marker doodling on the print ---------- */
+  .hero { position: relative; background: var(--hero); color: var(--ink); min-height: var(--screen, 100svh); display: grid; grid-template-columns: 1fr 1fr; overflow: hidden; isolation: isolate; }
+  .hero-photo { grid-column: 2; grid-row: 1; position: relative; }
+  .hero-photo img {
+    position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%;
+    /* eased fade: a straight ramp leaves a visible kink in his hair where it reaches full strength */
+    --fade: linear-gradient(to right, transparent 0, rgba(0,0,0,.06) 3%, rgba(0,0,0,.2) 6%, rgba(0,0,0,.42) 9%, rgba(0,0,0,.66) 12%, rgba(0,0,0,.84) 15%, rgba(0,0,0,.95) 18%, #000 21%);
+    -webkit-mask-image: var(--fade); mask-image: var(--fade);
+  }
+  .hero-copy { grid-column: 1; grid-row: 1; position: relative; z-index: 2; align-self: center; padding: 64px 0 104px var(--gutter); }
+  .name { white-space: nowrap; margin-right: -12%; }
+  .name .line { display: block; width: max-content; padding-right: .08em; }
+  .name .line + .line { margin-left: .42em; }
+  .name .ch { display: inline-block; }
+  .swash { display: block; width: 58%; height: 26px; margin: clamp(22px, 2.4vw, 34px) 0 0 .9em; overflow: visible; color: var(--accent); }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(26px, 3.6vw, 44px); }
+
+  /* the marker layer: JS places every mark on the photo's own pixels, so they track the crop at any size */
+  .marks { position: absolute; inset: 0; z-index: 2; pointer-events: none; }
+  .marks svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .marks path { fill: none; stroke: var(--accent); stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; opacity: .88; }
+  .marks .gleam { fill: #fff; stroke: var(--accent); stroke-width: 2.2; opacity: 1; }
+  .mark-label { position: absolute; left: 0; top: 0; translate: -50% -100%; rotate: -7deg; white-space: nowrap;
+    font: 700 clamp(28px, 2.7vw, 42px)/1 var(--marker); color: var(--accent); }
+  [data-marks="label"] .marks .gleam, [data-marks="none"] .marks, [data-marks="none"] .swash { display: none; }
+  .marks.no-gleam .gleam { display: none; }
+
+  /* the hero's end: scallops in the Scenes butter */
+  .hero::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 22px; z-index: 3; pointer-events: none;
+    background: radial-gradient(circle at 22px 22px, var(--band) 21.5px, transparent 22.5px) 0 0 / 44px 22px repeat-x; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* name first: the letters hop into place within the first second */
+    .name .ch { animation: hop .62s var(--spring) both; animation-delay: calc(.15s + var(--i) * 40ms); }
+    @keyframes hop { from { opacity: 0; transform: translateY(.6em) rotate(-8deg) scale(.6); } }
+    .hero-photo img { animation: fade .9s ease-out both; }
+    @keyframes fade { from { opacity: 0; } }
+    /* then the marker, one stroke at a time */
+    .draw { stroke-dasharray: 1; stroke-dashoffset: 1; animation: draw var(--d, .45s) ease-in-out var(--t, 1s) forwards; }
+    @keyframes draw { to { stroke-dashoffset: 0; } }
+    .swash path { --t: 1.05s; --d: .5s; }
+    .marks .arrow { --t: 1.6s; --d: .5s; }
+    .marks .head { --t: 2.08s; --d: .18s; }
+    .mark-label { clip-path: inset(-20% 100% -20% -10%); animation: write .5s steps(9, end) 2.3s forwards; }
+    @keyframes write { to { clip-path: inset(-20% -10% -20% -10%); } }
+    .marks .gleam { transform-box: fill-box; transform-origin: center; scale: 0; animation: gleam .5s var(--spring) 2.95s forwards; }
+    @keyframes gleam { 60% { scale: 1.35; rotate: 25deg; } to { scale: 1; rotate: 0deg; } }
+  }
+
+  /* ---------- Sections ---------- */
+  section { position: relative; padding-block: clamp(76px, 9vw, 124px); }
+  section > .wrap { position: relative; z-index: 1; }
+  .sec-head { position: relative; width: fit-content; max-width: 100%; margin-bottom: clamp(32px, 4.5vw, 54px); }
+  .sec-head h2 { font-size: clamp(46px, 6vw, 82px); }
+  .squiggle { display: block; width: 150px; height: 18px; margin-top: 12px; color: var(--accent); opacity: .5; }
+
+  /* faint background doodles */
+  .doodles { display: none; position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+  [data-doodles="on"] .doodles { display: block; }
+  .dd { position: absolute; width: clamp(32px, 3.6vw, 52px); height: auto; aspect-ratio: 1; color: var(--accent); opacity: .2; }
+  @media (prefers-reduced-motion: no-preference) {
+    .dd { animation: float 8s ease-in-out infinite; }
+    .dd:nth-child(2n) { animation-duration: 10s; animation-delay: -3s; }
+    @keyframes float { 50% { transform: translateY(-10px) rotate(8deg); } }
+  }
+
+  /* ---------- Scenes: the two demo reels in a retro TV ---------- */
+  .reel { background: var(--band); }
+  /* the butter is never flat: crayon hatching, coming in under the hero */
+  .reel::before { content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .reel::before { background: var(--band-ink); opacity: .19;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='4'/%3E%3C/filter%3E%3Cg stroke='%23000' fill='none' stroke-linecap='round' filter='url(%23r)'%3E%3Cpath d='M0 0 L-300 300' stroke-width='1.8' stroke-opacity='0.75' stroke-dasharray='67 12 40 14 104 7' stroke-dashoffset='77'/%3E%3Cpath d='M300 0 L0 300' stroke-width='1.8' stroke-opacity='0.75' stroke-dasharray='67 12 40 14 104 7' stroke-dashoffset='77'/%3E%3Cpath d='M5 0 L-295 300' stroke-width='2.7' stroke-opacity='0.59' stroke-dasharray='49 6 40 12 100 13' stroke-dashoffset='50'/%3E%3Cpath d='M305 0 L5 300' stroke-width='2.7' stroke-opacity='0.59' stroke-dasharray='49 6 40 12 100 13' stroke-dashoffset='50'/%3E%3Cpath d='M15 0 L-285 300' stroke-width='1.6' stroke-opacity='0.80' stroke-dasharray='86 9 10 14 38 8' stroke-dashoffset='75'/%3E%3Cpath d='M315 0 L15 300' stroke-width='1.6' stroke-opacity='0.80' stroke-dasharray='86 9 10 14 38 8' stroke-dashoffset='75'/%3E%3Cpath d='M21 0 L-279 300' stroke-width='2.6' stroke-opacity='0.90' stroke-dasharray='54 10 48 15 79 17' stroke-dashoffset='54'/%3E%3Cpath d='M321 0 L21 300' stroke-width='2.6' stroke-opacity='0.90' stroke-dasharray='54 10 48 15 79 17' stroke-dashoffset='54'/%3E%3Cpath d='M29 0 L-271 300' stroke-width='2.7' stroke-opacity='0.69' stroke-dasharray='37 8 16 4 47 13' stroke-dashoffset='27'/%3E%3Cpath d='M329 0 L29 300' stroke-width='2.7' stroke-opacity='0.69' stroke-dasharray='37 8 16 4 47 13' stroke-dashoffset='27'/%3E%3Cpath d='M36 0 L-264 300' stroke-width='2.5' stroke-opacity='0.88' stroke-dasharray='58 9 42 10 103 11' stroke-dashoffset='68'/%3E%3Cpath d='M336 0 L36 300' stroke-width='2.5' stroke-opacity='0.88' stroke-dasharray='58 9 42 10 103 11' stroke-dashoffset='68'/%3E%3Cpath d='M45 0 L-255 300' stroke-width='2.3' stroke-opacity='0.95' stroke-dasharray='23 7 48 14 50 17' stroke-dashoffset='41'/%3E%3Cpath d='M345 0 L45 300' stroke-width='2.3' stroke-opacity='0.95' stroke-dasharray='23 7 48 14 50 17' stroke-dashoffset='41'/%3E%3Cpath d='M58 0 L-242 300' stroke-width='2.8' stroke-opacity='0.76' stroke-dasharray='47 12 27 8 45 7' stroke-dashoffset='61'/%3E%3Cpath d='M358 0 L58 300' stroke-width='2.8' stroke-opacity='0.76' stroke-dasharray='47 12 27 8 45 7' stroke-dashoffset='61'/%3E%3Cpath d='M70 0 L-230 300' stroke-width='3.0' stroke-opacity='0.50' stroke-dasharray='28 9 19 4 67 12' stroke-dashoffset='53'/%3E%3Cpath d='M370 0 L70 300' stroke-width='3.0' stroke-opacity='0.50' stroke-dasharray='28 9 19 4 67 12' stroke-dashoffset='53'/%3E%3Cpath d='M82 0 L-218 300' stroke-width='1.5' stroke-opacity='0.79' stroke-dasharray='25 9 47 9 100 20' stroke-dashoffset='35'/%3E%3Cpath d='M382 0 L82 300' stroke-width='1.5' stroke-opacity='0.79' stroke-dasharray='25 9 47 9 100 20' stroke-dashoffset='35'/%3E%3Cpath d='M91 0 L-209 300' stroke-width='3.0' stroke-opacity='0.62' stroke-dasharray='29 4 48 12 34 9' stroke-dashoffset='52'/%3E%3Cpath d='M391 0 L91 300' stroke-width='3.0' stroke-opacity='0.62' stroke-dasharray='29 4 48 12 34 9' stroke-dashoffset='52'/%3E%3Cpath d='M98 0 L-202 300' stroke-width='1.8' stroke-opacity='0.83' stroke-dasharray='63 8 33 6 78 12' stroke-dashoffset='58'/%3E%3Cpath d='M398 0 L98 300' stroke-width='1.8' stroke-opacity='0.83' stroke-dasharray='63 8 33 6 78 12' stroke-dashoffset='58'/%3E%3Cpath d='M110 0 L-190 300' stroke-width='2.0' stroke-opacity='0.93' stroke-dasharray='33 12 42 8 85 16' stroke-dashoffset='30'/%3E%3Cpath d='M410 0 L110 300' stroke-width='2.0' stroke-opacity='0.93' stroke-dasharray='33 12 42 8 85 16' stroke-dashoffset='30'/%3E%3Cpath d='M123 0 L-177 300' stroke-width='2.1' stroke-opacity='0.59' stroke-dasharray='58 11 31 4 83 15' stroke-dashoffset='40'/%3E%3Cpath d='M423 0 L123 300' stroke-width='2.1' stroke-opacity='0.59' stroke-dasharray='58 11 31 4 83 15' stroke-dashoffset='40'/%3E%3Cpath d='M128 0 L-172 300' stroke-width='2.4' stroke-opacity='0.80' stroke-dasharray='27 8 39 9 75 15' stroke-dashoffset='35'/%3E%3Cpath d='M428 0 L128 300' stroke-width='2.4' stroke-opacity='0.80' stroke-dasharray='27 8 39 9 75 15' stroke-dashoffset='35'/%3E%3Cpath d='M139 0 L-161 300' stroke-width='1.4' stroke-opacity='0.48' stroke-dasharray='22 8 26 14 88 10' stroke-dashoffset='75'/%3E%3Cpath d='M439 0 L139 300' stroke-width='1.4' stroke-opacity='0.48' stroke-dasharray='22 8 26 14 88 10' stroke-dashoffset='75'/%3E%3Cpath d='M149 0 L-151 300' stroke-width='1.7' stroke-opacity='0.55' stroke-dasharray='67 12 26 8 78 7' stroke-dashoffset='3'/%3E%3Cpath d='M449 0 L149 300' stroke-width='1.7' stroke-opacity='0.55' stroke-dasharray='67 12 26 8 78 7' stroke-dashoffset='3'/%3E%3Cpath d='M161 0 L-139 300' stroke-width='2.5' stroke-opacity='0.52' stroke-dasharray='84 6 27 7 71 8' stroke-dashoffset='55'/%3E%3Cpath d='M461 0 L161 300' stroke-width='2.5' stroke-opacity='0.52' stroke-dasharray='84 6 27 7 71 8' stroke-dashoffset='55'/%3E%3Cpath d='M172 0 L-128 300' stroke-width='1.6' stroke-opacity='0.78' stroke-dasharray='62 6 38 16 51 7' stroke-dashoffset='43'/%3E%3Cpath d='M472 0 L172 300' stroke-width='1.6' stroke-opacity='0.78' stroke-dasharray='62 6 38 16 51 7' stroke-dashoffset='43'/%3E%3Cpath d='M183 0 L-117 300' stroke-width='1.7' stroke-opacity='0.76' stroke-dasharray='54 6 17 4 97 9' stroke-dashoffset='40'/%3E%3Cpath d='M483 0 L183 300' stroke-width='1.7' stroke-opacity='0.76' stroke-dasharray='54 6 17 4 97 9' stroke-dashoffset='40'/%3E%3Cpath d='M194 0 L-106 300' stroke-width='2.7' stroke-opacity='0.55' stroke-dasharray='55 8 15 16 109 11' stroke-dashoffset='75'/%3E%3Cpath d='M494 0 L194 300' stroke-width='2.7' stroke-opacity='0.55' stroke-dasharray='55 8 15 16 109 11' stroke-dashoffset='75'/%3E%3Cpath d='M200 0 L-100 300' stroke-width='1.9' stroke-opacity='0.89' stroke-dasharray='54 10 32 14 83 10' stroke-dashoffset='53'/%3E%3Cpath d='M500 0 L200 300' stroke-width='1.9' stroke-opacity='0.89' stroke-dasharray='54 10 32 14 83 10' stroke-dashoffset='53'/%3E%3Cpath d='M210 0 L-90 300' stroke-width='1.5' stroke-opacity='0.68' stroke-dasharray='45 3 40 13 95 12' stroke-dashoffset='71'/%3E%3Cpath d='M510 0 L210 300' stroke-width='1.5' stroke-opacity='0.68' stroke-dasharray='45 3 40 13 95 12' stroke-dashoffset='71'/%3E%3Cpath d='M222 0 L-78 300' stroke-width='2.9' stroke-opacity='0.57' stroke-dasharray='78 11 28 12 73 20' stroke-dashoffset='29'/%3E%3Cpath d='M522 0 L222 300' stroke-width='2.9' stroke-opacity='0.57' stroke-dasharray='78 11 28 12 73 20' stroke-dashoffset='29'/%3E%3Cpath d='M234 0 L-66 300' stroke-width='2.8' stroke-opacity='0.98' stroke-dasharray='35 6 12 4 95 20' stroke-dashoffset='25'/%3E%3Cpath d='M534 0 L234 300' stroke-width='2.8' stroke-opacity='0.98' stroke-dasharray='35 6 12 4 95 20' stroke-dashoffset='25'/%3E%3Cpath d='M246 0 L-54 300' stroke-width='2.8' stroke-opacity='0.77' stroke-dasharray='21 10 17 6 94 10' stroke-dashoffset='30'/%3E%3Cpath d='M546 0 L246 300' stroke-width='2.8' stroke-opacity='0.77' stroke-dasharray='21 10 17 6 94 10' stroke-dashoffset='30'/%3E%3Cpath d='M257 0 L-43 300' stroke-width='2.2' stroke-opacity='0.68' stroke-dasharray='34 8 18 8 99 13' stroke-dashoffset='7'/%3E%3Cpath d='M557 0 L257 300' stroke-width='2.2' stroke-opacity='0.68' stroke-dasharray='34 8 18 8 99 13' stroke-dashoffset='7'/%3E%3Cpath d='M264 0 L-36 300' stroke-width='1.7' stroke-opacity='0.74' stroke-dasharray='35 5 25 16 65 20' stroke-dashoffset='16'/%3E%3Cpath d='M564 0 L264 300' stroke-width='1.7' stroke-opacity='0.74' stroke-dasharray='35 5 25 16 65 20' stroke-dashoffset='16'/%3E%3Cpath d='M276 0 L-24 300' stroke-width='1.4' stroke-opacity='0.80' stroke-dasharray='71 3 27 7 64 15' stroke-dashoffset='67'/%3E%3Cpath d='M576 0 L276 300' stroke-width='1.4' stroke-opacity='0.80' stroke-dasharray='71 3 27 7 64 15' stroke-dashoffset='67'/%3E%3Cpath d='M285 0 L-15 300' stroke-width='1.5' stroke-opacity='0.63' stroke-dasharray='20 3 18 4 45 6' stroke-dashoffset='8'/%3E%3Cpath d='M585 0 L285 300' stroke-width='1.5' stroke-opacity='0.63' stroke-dasharray='20 3 18 4 45 6' stroke-dashoffset='8'/%3E%3Cpath d='M294 0 L-6 300' stroke-width='1.5' stroke-opacity='0.84' stroke-dasharray='85 11 41 9 50 11' stroke-dashoffset='9'/%3E%3Cpath d='M594 0 L294 300' stroke-width='1.5' stroke-opacity='0.84' stroke-dasharray='85 11 41 9 50 11' stroke-dashoffset='9'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 300px, linear-gradient(transparent, #000 160px); -webkit-mask-composite: source-in;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='r'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.7' numOctaves='2' seed='4'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='4'/%3E%3C/filter%3E%3Cg stroke='%23000' fill='none' stroke-linecap='round' filter='url(%23r)'%3E%3Cpath d='M0 0 L-300 300' stroke-width='1.8' stroke-opacity='0.75' stroke-dasharray='67 12 40 14 104 7' stroke-dashoffset='77'/%3E%3Cpath d='M300 0 L0 300' stroke-width='1.8' stroke-opacity='0.75' stroke-dasharray='67 12 40 14 104 7' stroke-dashoffset='77'/%3E%3Cpath d='M5 0 L-295 300' stroke-width='2.7' stroke-opacity='0.59' stroke-dasharray='49 6 40 12 100 13' stroke-dashoffset='50'/%3E%3Cpath d='M305 0 L5 300' stroke-width='2.7' stroke-opacity='0.59' stroke-dasharray='49 6 40 12 100 13' stroke-dashoffset='50'/%3E%3Cpath d='M15 0 L-285 300' stroke-width='1.6' stroke-opacity='0.80' stroke-dasharray='86 9 10 14 38 8' stroke-dashoffset='75'/%3E%3Cpath d='M315 0 L15 300' stroke-width='1.6' stroke-opacity='0.80' stroke-dasharray='86 9 10 14 38 8' stroke-dashoffset='75'/%3E%3Cpath d='M21 0 L-279 300' stroke-width='2.6' stroke-opacity='0.90' stroke-dasharray='54 10 48 15 79 17' stroke-dashoffset='54'/%3E%3Cpath d='M321 0 L21 300' stroke-width='2.6' stroke-opacity='0.90' stroke-dasharray='54 10 48 15 79 17' stroke-dashoffset='54'/%3E%3Cpath d='M29 0 L-271 300' stroke-width='2.7' stroke-opacity='0.69' stroke-dasharray='37 8 16 4 47 13' stroke-dashoffset='27'/%3E%3Cpath d='M329 0 L29 300' stroke-width='2.7' stroke-opacity='0.69' stroke-dasharray='37 8 16 4 47 13' stroke-dashoffset='27'/%3E%3Cpath d='M36 0 L-264 300' stroke-width='2.5' stroke-opacity='0.88' stroke-dasharray='58 9 42 10 103 11' stroke-dashoffset='68'/%3E%3Cpath d='M336 0 L36 300' stroke-width='2.5' stroke-opacity='0.88' stroke-dasharray='58 9 42 10 103 11' stroke-dashoffset='68'/%3E%3Cpath d='M45 0 L-255 300' stroke-width='2.3' stroke-opacity='0.95' stroke-dasharray='23 7 48 14 50 17' stroke-dashoffset='41'/%3E%3Cpath d='M345 0 L45 300' stroke-width='2.3' stroke-opacity='0.95' stroke-dasharray='23 7 48 14 50 17' stroke-dashoffset='41'/%3E%3Cpath d='M58 0 L-242 300' stroke-width='2.8' stroke-opacity='0.76' stroke-dasharray='47 12 27 8 45 7' stroke-dashoffset='61'/%3E%3Cpath d='M358 0 L58 300' stroke-width='2.8' stroke-opacity='0.76' stroke-dasharray='47 12 27 8 45 7' stroke-dashoffset='61'/%3E%3Cpath d='M70 0 L-230 300' stroke-width='3.0' stroke-opacity='0.50' stroke-dasharray='28 9 19 4 67 12' stroke-dashoffset='53'/%3E%3Cpath d='M370 0 L70 300' stroke-width='3.0' stroke-opacity='0.50' stroke-dasharray='28 9 19 4 67 12' stroke-dashoffset='53'/%3E%3Cpath d='M82 0 L-218 300' stroke-width='1.5' stroke-opacity='0.79' stroke-dasharray='25 9 47 9 100 20' stroke-dashoffset='35'/%3E%3Cpath d='M382 0 L82 300' stroke-width='1.5' stroke-opacity='0.79' stroke-dasharray='25 9 47 9 100 20' stroke-dashoffset='35'/%3E%3Cpath d='M91 0 L-209 300' stroke-width='3.0' stroke-opacity='0.62' stroke-dasharray='29 4 48 12 34 9' stroke-dashoffset='52'/%3E%3Cpath d='M391 0 L91 300' stroke-width='3.0' stroke-opacity='0.62' stroke-dasharray='29 4 48 12 34 9' stroke-dashoffset='52'/%3E%3Cpath d='M98 0 L-202 300' stroke-width='1.8' stroke-opacity='0.83' stroke-dasharray='63 8 33 6 78 12' stroke-dashoffset='58'/%3E%3Cpath d='M398 0 L98 300' stroke-width='1.8' stroke-opacity='0.83' stroke-dasharray='63 8 33 6 78 12' stroke-dashoffset='58'/%3E%3Cpath d='M110 0 L-190 300' stroke-width='2.0' stroke-opacity='0.93' stroke-dasharray='33 12 42 8 85 16' stroke-dashoffset='30'/%3E%3Cpath d='M410 0 L110 300' stroke-width='2.0' stroke-opacity='0.93' stroke-dasharray='33 12 42 8 85 16' stroke-dashoffset='30'/%3E%3Cpath d='M123 0 L-177 300' stroke-width='2.1' stroke-opacity='0.59' stroke-dasharray='58 11 31 4 83 15' stroke-dashoffset='40'/%3E%3Cpath d='M423 0 L123 300' stroke-width='2.1' stroke-opacity='0.59' stroke-dasharray='58 11 31 4 83 15' stroke-dashoffset='40'/%3E%3Cpath d='M128 0 L-172 300' stroke-width='2.4' stroke-opacity='0.80' stroke-dasharray='27 8 39 9 75 15' stroke-dashoffset='35'/%3E%3Cpath d='M428 0 L128 300' stroke-width='2.4' stroke-opacity='0.80' stroke-dasharray='27 8 39 9 75 15' stroke-dashoffset='35'/%3E%3Cpath d='M139 0 L-161 300' stroke-width='1.4' stroke-opacity='0.48' stroke-dasharray='22 8 26 14 88 10' stroke-dashoffset='75'/%3E%3Cpath d='M439 0 L139 300' stroke-width='1.4' stroke-opacity='0.48' stroke-dasharray='22 8 26 14 88 10' stroke-dashoffset='75'/%3E%3Cpath d='M149 0 L-151 300' stroke-width='1.7' stroke-opacity='0.55' stroke-dasharray='67 12 26 8 78 7' stroke-dashoffset='3'/%3E%3Cpath d='M449 0 L149 300' stroke-width='1.7' stroke-opacity='0.55' stroke-dasharray='67 12 26 8 78 7' stroke-dashoffset='3'/%3E%3Cpath d='M161 0 L-139 300' stroke-width='2.5' stroke-opacity='0.52' stroke-dasharray='84 6 27 7 71 8' stroke-dashoffset='55'/%3E%3Cpath d='M461 0 L161 300' stroke-width='2.5' stroke-opacity='0.52' stroke-dasharray='84 6 27 7 71 8' stroke-dashoffset='55'/%3E%3Cpath d='M172 0 L-128 300' stroke-width='1.6' stroke-opacity='0.78' stroke-dasharray='62 6 38 16 51 7' stroke-dashoffset='43'/%3E%3Cpath d='M472 0 L172 300' stroke-width='1.6' stroke-opacity='0.78' stroke-dasharray='62 6 38 16 51 7' stroke-dashoffset='43'/%3E%3Cpath d='M183 0 L-117 300' stroke-width='1.7' stroke-opacity='0.76' stroke-dasharray='54 6 17 4 97 9' stroke-dashoffset='40'/%3E%3Cpath d='M483 0 L183 300' stroke-width='1.7' stroke-opacity='0.76' stroke-dasharray='54 6 17 4 97 9' stroke-dashoffset='40'/%3E%3Cpath d='M194 0 L-106 300' stroke-width='2.7' stroke-opacity='0.55' stroke-dasharray='55 8 15 16 109 11' stroke-dashoffset='75'/%3E%3Cpath d='M494 0 L194 300' stroke-width='2.7' stroke-opacity='0.55' stroke-dasharray='55 8 15 16 109 11' stroke-dashoffset='75'/%3E%3Cpath d='M200 0 L-100 300' stroke-width='1.9' stroke-opacity='0.89' stroke-dasharray='54 10 32 14 83 10' stroke-dashoffset='53'/%3E%3Cpath d='M500 0 L200 300' stroke-width='1.9' stroke-opacity='0.89' stroke-dasharray='54 10 32 14 83 10' stroke-dashoffset='53'/%3E%3Cpath d='M210 0 L-90 300' stroke-width='1.5' stroke-opacity='0.68' stroke-dasharray='45 3 40 13 95 12' stroke-dashoffset='71'/%3E%3Cpath d='M510 0 L210 300' stroke-width='1.5' stroke-opacity='0.68' stroke-dasharray='45 3 40 13 95 12' stroke-dashoffset='71'/%3E%3Cpath d='M222 0 L-78 300' stroke-width='2.9' stroke-opacity='0.57' stroke-dasharray='78 11 28 12 73 20' stroke-dashoffset='29'/%3E%3Cpath d='M522 0 L222 300' stroke-width='2.9' stroke-opacity='0.57' stroke-dasharray='78 11 28 12 73 20' stroke-dashoffset='29'/%3E%3Cpath d='M234 0 L-66 300' stroke-width='2.8' stroke-opacity='0.98' stroke-dasharray='35 6 12 4 95 20' stroke-dashoffset='25'/%3E%3Cpath d='M534 0 L234 300' stroke-width='2.8' stroke-opacity='0.98' stroke-dasharray='35 6 12 4 95 20' stroke-dashoffset='25'/%3E%3Cpath d='M246 0 L-54 300' stroke-width='2.8' stroke-opacity='0.77' stroke-dasharray='21 10 17 6 94 10' stroke-dashoffset='30'/%3E%3Cpath d='M546 0 L246 300' stroke-width='2.8' stroke-opacity='0.77' stroke-dasharray='21 10 17 6 94 10' stroke-dashoffset='30'/%3E%3Cpath d='M257 0 L-43 300' stroke-width='2.2' stroke-opacity='0.68' stroke-dasharray='34 8 18 8 99 13' stroke-dashoffset='7'/%3E%3Cpath d='M557 0 L257 300' stroke-width='2.2' stroke-opacity='0.68' stroke-dasharray='34 8 18 8 99 13' stroke-dashoffset='7'/%3E%3Cpath d='M264 0 L-36 300' stroke-width='1.7' stroke-opacity='0.74' stroke-dasharray='35 5 25 16 65 20' stroke-dashoffset='16'/%3E%3Cpath d='M564 0 L264 300' stroke-width='1.7' stroke-opacity='0.74' stroke-dasharray='35 5 25 16 65 20' stroke-dashoffset='16'/%3E%3Cpath d='M276 0 L-24 300' stroke-width='1.4' stroke-opacity='0.80' stroke-dasharray='71 3 27 7 64 15' stroke-dashoffset='67'/%3E%3Cpath d='M576 0 L276 300' stroke-width='1.4' stroke-opacity='0.80' stroke-dasharray='71 3 27 7 64 15' stroke-dashoffset='67'/%3E%3Cpath d='M285 0 L-15 300' stroke-width='1.5' stroke-opacity='0.63' stroke-dasharray='20 3 18 4 45 6' stroke-dashoffset='8'/%3E%3Cpath d='M585 0 L285 300' stroke-width='1.5' stroke-opacity='0.63' stroke-dasharray='20 3 18 4 45 6' stroke-dashoffset='8'/%3E%3Cpath d='M294 0 L-6 300' stroke-width='1.5' stroke-opacity='0.84' stroke-dasharray='85 11 41 9 50 11' stroke-dashoffset='9'/%3E%3Cpath d='M594 0 L294 300' stroke-width='1.5' stroke-opacity='0.84' stroke-dasharray='85 11 41 9 50 11' stroke-dashoffset='9'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 300px, linear-gradient(transparent, #000 160px); mask-composite: intersect; }
+  .reel-body { display: grid; grid-template-columns: 2.2fr 1fr; gap: clamp(24px, 3.5vw, 48px); align-items: center; }
+  .reel-video { position: relative; aspect-ratio: 16 / 9; background: #000; border-radius: 22px; overflow: hidden; border: 3px solid var(--ink); box-shadow: 10px 10px 0 var(--ink); }
+  .reel-video video { width: 100%; height: 100%; display: block; object-fit: contain; background: #000; }
+  .reel-start { position: absolute; inset: 0; border: 0; padding: 0; background: rgba(0, 0, 0, .18); cursor: pointer; display: grid; place-items: center; }
+  .reel-start span {
+    width: clamp(76px, 9vw, 108px); aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center;
+    background: var(--accent); color: var(--on-accent); border: 3px solid var(--ink); transition: transform .35s var(--spring);
+  }
+  .reel-start svg { width: 30%; margin-left: 8%; }
+  .reel-start:hover span { transform: scale(1.1) rotate(-6deg); }
+  .reel.played .reel-start { display: none; }
+  .pick-label { margin: 0 0 12px; font-weight: 800; }
+  .reel-tabs { display: grid; gap: 14px; }
+  .reel-tabs button {
+    display: flex; align-items: center; gap: 14px; text-align: left; cursor: pointer; position: relative;
+    padding: 14px 18px 14px 14px; border-radius: 20px; background: var(--paper); border: 3px solid var(--ink);
+    transition: transform .3s var(--spring), box-shadow .3s var(--spring);
+  }
+  .reel-tabs button:hover { transform: translateY(-3px); box-shadow: 0 5px 0 var(--ink); }
+  .reel-tabs button[aria-selected="true"] { box-shadow: 0 5px 0 var(--ink); }
+  .pick-icon { flex: none; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; border: 3px solid var(--ink); }
+  .pick-icon svg { width: 13px; margin-left: 3px; }
+  [aria-selected="true"] .pick-icon { background: var(--accent); color: var(--on-accent); }
+  .pick-text { flex: 1; min-width: 0; display: grid; }
+  .pick-title { font: 600 clamp(21px, 1.9vw, 26px)/1.1 var(--display); font-style: var(--display-style); font-variation-settings: var(--display-axes); white-space: nowrap; }
+  .pick-text small { font-size: 16px; color: var(--ink-soft); margin-top: 2px; }
+  .now { display: none; position: absolute; top: -13px; right: 14px; transform: rotate(4deg); font-style: normal; font-size: 13px; font-weight: 800; padding: 4px 10px; border-radius: 999px; background: var(--ink); color: var(--paper); }
+  [aria-selected="true"] .now { display: block; }
+  .b-now { display: none; }
+  .reel.playing [aria-selected="true"] .b-now { display: inline; }
+  .reel.playing [aria-selected="true"] .b-sel { display: none; }
+  /* TV: ink cabinet, antenna, channel buttons */
+  .tv-antenna, .lbl-tv { display: none; }
+  [data-reel="tv"] .lbl-tv { display: inline; }
+  [data-reel="tv"] .lbl-pick { display: none; }
+  [data-reel="tv"] .reel-body { display: block; position: relative; max-width: 880px; margin-inline: auto; padding-top: 74px; }
+  [data-reel="tv"] .tv-antenna { display: block; position: absolute; top: 0; left: 50%; height: 78px; }
+  .tv-antenna::before { content: ""; position: absolute; bottom: -4px; left: -34px; width: 68px; height: 30px; background: var(--ink); border-radius: 34px 34px 0 0; }
+  .tv-antenna span { position: absolute; bottom: 10px; left: -3px; width: 6px; height: 84px; background: var(--ink); border-radius: 3px; transform-origin: 50% 100%; transform: rotate(-32deg); }
+  .tv-antenna span + span { transform: rotate(26deg); height: 74px; }
+  .tv-antenna span::after { content: ""; position: absolute; top: -13px; left: 50%; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%; background: var(--paper); border: 3px solid var(--ink); }
+  [data-reel="tv"] .reel-video { border: 22px solid var(--ink); border-radius: 44px; box-shadow: 0 0 0 4px var(--ink), 14px 14px 0 4px rgba(36, 37, 43, .28); }
+  [data-reel="tv"] .reel-video::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: 20px;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, .5); background: repeating-linear-gradient(transparent 0 3px, rgba(0, 0, 0, .07) 3px 4px);
+  }
+  [data-reel="tv"] .reel.played .reel-video::after { background: none; }
+  [data-reel="tv"] .reel-video.static::after {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    animation: snow .12s steps(3) infinite;
+  }
+  @keyframes snow { to { background-position: 90px 60px; } }
+  [data-reel="tv"] .reel-pick { margin-top: 36px; }
+  [data-reel="tv"] .reel-tabs { grid-template-columns: 1fr 1fr; }
+
+  /* ---------- Roles: three posters he's on, taped up ---------- */
+  .roles-list { list-style: none; margin: 0 auto; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(24px, 4vw, 56px); max-width: 940px; }
+  .role a { display: block; text-decoration: none; position: relative; transition: transform .45s var(--spring); }
+  .role:nth-child(1) a { transform: rotate(-2deg); }
+  .role:nth-child(2) a { transform: rotate(1.5deg) translateY(14px); }
+  .role:nth-child(3) a { transform: rotate(-1deg); }
+  .role a:hover, .role a:focus-visible { transform: rotate(0) translateY(-8px); }
+  .role-poster { position: relative; display: block; background: #fff; padding: 10px 10px 12px; box-shadow: 0 14px 28px rgba(36, 37, 43, .16); }
+  .role-poster img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; object-position: 50% 0; }
+  .role-poster::before { content: ""; position: absolute; top: -13px; left: 50%; width: 88px; height: 26px; margin-left: -44px; background: color-mix(in srgb, var(--band) 82%, transparent); transform: rotate(-4deg); box-shadow: 0 1px 2px rgba(36, 37, 43, .15); }
+  .role-as { position: absolute; right: -10px; bottom: 74px; z-index: 2; padding: 2px 12px 4px; background: var(--paper); border: 2px solid var(--ink); border-radius: 12px; transform: rotate(-5deg);
+    font: 700 26px/1 var(--marker); color: var(--ink); box-shadow: 3px 3px 0 var(--ink); }
+  .role-title { display: block; margin-top: 18px; font-weight: 800; line-height: 1.25; }
+  .role-meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0 12px; font-size: 16px; color: var(--ink-soft); }
+  .role-meta b { color: var(--accent); font-weight: 800; }
+
+  /* ---------- Headshots: a photobooth strip ---------- */
+  #headshots { background: var(--mist); }
+  #headshots::before, #headshots::after { content: ""; position: absolute; left: 0; right: 0; height: 22px; z-index: 2; }
+  #headshots::before { top: -21px; background: radial-gradient(circle at 22px 22px, var(--mist) 21.5px, transparent 22.5px) 0 0 / 44px 22px repeat-x; }
+  #headshots::after { bottom: -21px; background: radial-gradient(circle at 22px 0, var(--mist) 21.5px, transparent 22.5px) 0 0 / 44px 22px repeat-x; }
+  .booth { position: relative; max-width: 1060px; margin-inline: auto; background: #fbfbf8; padding: clamp(12px, 1.6vw, 20px) clamp(12px, 1.6vw, 20px) 0; border-radius: 6px;
+    box-shadow: 0 20px 40px rgba(36, 37, 43, .18); transform: rotate(-1.2deg); }
+  .booth::before { content: ""; position: absolute; top: -16px; left: 50%; width: 120px; height: 32px; margin-left: -60px; background: rgba(36, 37, 43, .12); transform: rotate(3deg); }
+  .booth ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(10px, 1.4vw, 16px); }
+  .booth button { display: block; width: 100%; padding: 0; border: 0; background: #000; cursor: zoom-in; overflow: hidden; }
+  .booth img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 50% 20%; transition: transform .6s ease, opacity .3s; }
+  .booth button:hover img, .booth button:focus-visible img { transform: scale(1.04); opacity: .92; }
+  .booth p { margin: 0; padding: 12px 4px 14px; text-align: center; font: 700 26px/1 var(--marker); color: var(--ink-soft); }
+
+  /* ---------- Credits ---------- */
+  .credits { display: grid; grid-template-columns: repeat(var(--cols, 2), 1fr); gap: 0 clamp(28px, 5vw, 72px); border-bottom: 3px solid var(--ink); padding-bottom: 24px; }
+  .credit-col > :first-child h3 { margin-top: 0; }
+  .credits h3 { font: 600 30px/1.05 var(--display); font-style: var(--display-style); font-variation-settings: var(--display-axes); margin: 34px 0 6px; padding-bottom: 8px; border-bottom: 3px solid var(--ink); }
+  .credit { display: grid; grid-template-columns: 1fr auto; column-gap: 16px; padding: 10px 0; border-bottom: 1px dashed rgba(36, 37, 43, .3); }
+  .credit-title { font-weight: 800; line-height: 1.3; }
+  .credit-role { grid-row: 2; font-size: 16px; line-height: 1.4; color: var(--ink-soft); }
+  .credit-year { grid-row: 1 / span 2; grid-column: 2; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .credit-col > :last-child .credit:last-child, .credit-col > .credit:last-child { border-bottom: 0; }
+
+  /* ---------- Footer ---------- */
+  .footer { position: relative; background: var(--ink); color: var(--paper); padding-block: clamp(84px, 10vw, 132px) calc(32px + env(safe-area-inset-bottom)); }
+  .footer::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 22px;
+    background: radial-gradient(circle at 22px 0, var(--paper) 21.5px, transparent 22.5px) 0 0 / 44px 22px repeat-x; }
+  .footer h2 { color: var(--band); font-size: clamp(48px, 7.2vw, 108px); margin-bottom: clamp(30px, 4vw, 48px); }
+  .foot-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 28px 40px; align-items: end; }
+  .foot-grid .pill { border-color: var(--paper); box-shadow: 0 4px 0 var(--paper); }
+  .foot-grid .pill:hover { box-shadow: 0 7px 0 var(--paper); }
+  .foot-note { margin: 16px 0 0; color: rgba(247, 243, 234, .7); font-size: 16px; }
+  .foot-grid h3 { margin: 0 0 8px; font-size: 15px; font-weight: 800; color: var(--band); }
+  .foot-grid ul { margin: 0; padding: 0; list-style: none; }
+  .foot-grid li + li { margin-top: 4px; }
+  .foot-grid li a { text-decoration: none; border-bottom: 2px solid rgba(247, 243, 234, .4); }
+  .foot-grid li a:hover { border-color: var(--paper); }
+  .colophon { margin-top: 72px; color: rgba(247, 243, 234, .55); font-size: 14px; }
+  .built-by { display: inline-block; margin-left: 1.1em; padding-left: 1.1em; border-left: 1px solid color-mix(in srgb, currentColor 35%, transparent); font-size: 12px; font-weight: 400; letter-spacing: .02em; text-transform: none; opacity: 0.85; }
+  .built-by a { color: inherit; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 45%, transparent); }
+  .built-by a:hover { text-decoration-color: currentColor; }
+  @media (max-width: 600px) { .built-by { display: block; margin: 6px 0 0; padding: 0; border: 0; } }
+
+  /* Lightbox */
+  .lightbox { border: 0; padding: 0; background: transparent; max-width: 100vw; max-height: 100vh; text-align: center; }
+  body.locked { overflow: hidden; }
+  .lightbox::backdrop { background: rgba(36, 37, 43, .94); }
+  .lightbox img { max-height: 84vh; max-width: 86vw; border-radius: 6px; }
+  .lightbox button { position: fixed; background: var(--paper); color: var(--ink); border: 3px solid var(--ink); width: 52px; height: 52px; border-radius: 50%; font-size: 26px; line-height: 1; cursor: pointer; }
+  .lightbox .prev { left: 16px; top: 50%; } .lightbox .next { right: 16px; top: 50%; }
+  .lightbox-close { top: 16px; right: 16px; }
+
+  /* Cursor sparkles (option) */
+  .spark { position: fixed; top: 0; left: 0; z-index: 60; pointer-events: none; width: 16px; height: 16px; margin: -8px 0 0 -8px; }
+
+  @media (max-width: 960px) {
+    .reel-body { display: block; }
+    .reel-pick { margin-top: 32px; }
+    .reel-tabs { grid-template-columns: 1fr 1fr; }
+  }
+  /* phones: photo across the top of the screen, the name on its lower edge */
+  @media (max-width: 700px) {
+    body { font-size: 17px; }
+    .hero { grid-template-columns: 1fr; grid-template-rows: auto auto; min-height: var(--screen, 100svh); align-content: start; }
+    .hero-photo { grid-column: 1; height: calc(var(--screen, 100svh) * .66); }
+    .hero-photo img { -webkit-mask-image: linear-gradient(#000 60%, transparent); mask-image: linear-gradient(#000 60%, transparent); }
+    .hero-copy { grid-column: 1; grid-row: 2; margin-top: calc(var(--screen, 100svh) * -.16); padding: 0 var(--gutter) 64px; }
+    .name { margin-right: 0; }
+    .swash { height: 20px; }
+    .pill { padding: 12px 20px; }
+    [data-reel="tv"] .reel-body { padding-top: 56px; }
+    [data-reel="tv"] .tv-antenna { transform: scale(.7); transform-origin: 50% 100%; height: 58px; }
+    [data-reel="tv"] .reel-video { border-width: 12px; border-radius: 26px; box-shadow: 0 0 0 3px var(--ink), 7px 7px 0 3px rgba(36, 37, 43, .28); }
+    .reel-video { box-shadow: 6px 6px 0 var(--ink); }
+    .reel-tabs, [data-reel="tv"] .reel-tabs { grid-template-columns: 1fr; }
+    /* roles: two posters side by side, the third hidden (no clipped swipe row; same call as Michael's Featured) */
+    .roles-list { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; padding-top: 14px; }
+    .role:nth-child(3) { display: none; }
+    #roles .dd:nth-child(2) { display: none; } /* the spiral landed on the IMDb link */
+    .role-poster { padding: 7px 7px 9px; }
+    .role-poster::before { width: 64px; height: 20px; margin-left: -32px; top: -10px; }
+    .role-as { font-size: 17px; right: -6px; bottom: 58px; padding: 2px 9px 3px; }
+    /* headshots: the strip stands up, like a real one */
+    .booth { max-width: 290px; transform: rotate(-2deg); }
+    .booth ul { grid-template-columns: 1fr; }
+    .credits { --cols: 1; }
+    .foot-grid { grid-template-columns: 1fr; }
+    .lightbox .prev, .lightbox .next { top: auto; bottom: 16px; }
+    .dd:nth-child(n+3) { display: none; }
+  }
+
+  /* touch screens: 40px+ hit areas on the footer profile links, spaced so the areas don't overlap */
+  @media (pointer: coarse) {
+    .foot-grid li a { position: relative; }
+    .foot-grid li a::after { content: ""; position: absolute; inset: -9px -8px -10px; }
+    .foot-grid li + li { margin-top: 18px; }
+  }
+</style>
+<script>
+  // Phones: pin the hero to the first screen height, in px. In-app browsers (Instagram etc.) resize the whole
+  // viewport, svh included, as their toolbar slides away on scroll, so a svh/innerHeight hero grows mid-scroll.
+  // Only a width change (rotation) re-measures. Desktop keeps plain svh. Size the hero with var(--screen, 100svh).
+  (() => { if (!matchMedia('(pointer: coarse)').matches) return;
+    const r = document.documentElement; let w = 0;
+    const pin = () => { if (innerWidth === w) return; w = innerWidth; r.style.setProperty('--screen', innerHeight + 'px'); };
+    pin(); addEventListener('resize', pin); })();
+</script>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="squiggle" viewBox="0 0 150 18"><path d="M3 11 C 15 1, 25 1, 37 9 S 59 17, 71 9 S 93 1, 105 9 S 127 17, 147 7" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/></symbol>
+  <symbol id="play" viewBox="0 0 10 12"><path d="M0 0 L10 6 L0 12 Z" fill="currentColor"/></symbol>
+  <symbol id="ig" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/></g><circle cx="17.4" cy="6.6" r="1.3" fill="currentColor"/></symbol>
+  <symbol id="d-star" viewBox="0 0 48 48"><path d="M24 4 L29 18 L44 19 L32 28 L36 43 L24 34 L12 43 L16 28 L4 19 L19 18 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></symbol>
+  <symbol id="d-spark" viewBox="0 0 48 48"><path d="M24 4 C26 18 30 22 44 24 C30 26 26 30 24 44 C22 30 18 26 4 24 C18 22 22 18 24 4 Z" fill="currentColor"/></symbol>
+  <symbol id="d-heart" viewBox="0 0 48 48"><path d="M24 41 C10 31 4 23 6 15 C8 8 18 6 24 15 C30 6 40 8 42 15 C44 23 38 31 24 41 Z" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"/></symbol>
+  <symbol id="d-smile" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="24" r="18"/><path d="M18 20 v3 M30 20 v3 M16 29 c4 6 12 6 16 0"/></g></symbol>
+  <symbol id="d-spiral" viewBox="0 0 48 48"><path d="M24 24 c3 0 4 3 2 5 c-3 3 -8 1 -8 -3 c0 -6 7 -9 12 -6 c6 4 5 13 -1 16 c-8 4 -18 -1 -18 -10 c0 -10 10 -17 20 -14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></symbol>
+</svg>
+
+<header class="hero" id="top">
+  <div class="hero-photo">
+    <!-- data-face: where the marker points (fractions of the image); data-label: where "that's me" sits; data-gleam: the smile -->
+    <img src="assets/photos/hero-smile.webp" alt="Noah Stephens, smiling, black and white headshot" width="1280" height="1600" fetchpriority="high"
+         data-face="0.6,0.25" data-label="0.82,0.13" data-gleam="0.5,0.39">
+    <div class="marks" aria-hidden="true">
+      <svg><path class="arrow draw" pathLength="1"/><path class="head draw" pathLength="1"/><path class="gleam"/></svg>
+      <span class="mark-label">that&rsquo;s me!</span>
+    </div>
+  </div>
+  <div class="doodles" aria-hidden="true">
+    <svg class="dd" style="top:9%;left:3%"><use href="#d-spark"/></svg>
+    <svg class="dd" style="top:80%;left:36%"><use href="#d-heart"/></svg>
+  </div>
+  <div class="hero-copy">
+    <h1 class="name display"><span class="line">Noah</span><span class="line">Stephens</span></h1>
+    <svg class="swash" viewBox="0 0 300 26" preserveAspectRatio="none" aria-hidden="true"><path class="draw" pathLength="1" d="M4 15 C 40 4, 70 22, 110 13 S 180 4, 220 14 S 270 20, 296 8" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round"/></svg>
+    <div class="hero-actions">
+      <a class="pill" href="#reel"><svg viewBox="0 0 10 12" aria-hidden="true"><use href="#play"/></svg>Watch my scenes</a>
+      <a class="pill ghost" href="https://ig.me/m/nstephens_" rel="noopener"><svg class="ig" viewBox="0 0 24 24" aria-hidden="true"><use href="#ig"/></svg>Message me</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <section class="reel" id="reel" aria-labelledby="reel-title">
+    <div class="doodles" aria-hidden="true">
+      <svg class="dd" style="top:10%;right:7%"><use href="#d-smile"/></svg>
+      <svg class="dd" style="bottom:9%;left:2.5%"><use href="#d-star"/></svg>
+    </div>
+    <div class="wrap">
+      <div class="sec-head"><h2 class="display" id="reel-title">Scenes</h2><svg class="squiggle" aria-hidden="true"><use href="#squiggle"/></svg></div>
+      <div class="reel-body">
+        <div class="tv-antenna" aria-hidden="true"><span></span><span></span></div>
+        <div class="reel-video">
+          <video id="player" playsinline preload="none" disablepictureinpicture poster="assets/video/scene-1.jpg" src="assets/video/scene-1.mp4"></video>
+          <button class="reel-start" type="button" aria-label="Play scene"><span><svg viewBox="0 0 10 12" aria-hidden="true"><use href="#play"/></svg></span></button>
+        </div>
+        <div class="reel-pick">
+          <p class="pick-label" id="pick-label"><span class="lbl-pick">Choose a scene</span><span class="lbl-tv">Change the channel</span></p>
+          <div class="reel-tabs" role="tablist" aria-labelledby="pick-label">
+            <button role="tab" aria-selected="true" data-src="assets/video/scene-1.mp4" data-poster="assets/video/scene-1.jpg"><span class="pick-icon" aria-hidden="true"><svg viewBox="0 0 10 12"><use href="#play"/></svg></span><span class="pick-text"><span class="pick-title">The living room</span><small>Scene one &middot; 2:16</small></span><em class="now"><span class="b-now">Now playing</span><span class="b-sel">Selected</span></em></button>
+            <button role="tab" aria-selected="false" data-src="assets/video/scene-2.mp4" data-poster="assets/video/scene-2.jpg"><span class="pick-icon" aria-hidden="true"><svg viewBox="0 0 10 12"><use href="#play"/></svg></span><span class="pick-text"><span class="pick-title">Late night</span><small>Scene two &middot; 2:33</small></span><em class="now"><span class="b-now">Now playing</span><span class="b-sel">Selected</span></em></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="roles" aria-labelledby="roles-title">
+    <div class="doodles" aria-hidden="true">
+      <svg class="dd" style="top:8%;right:6%"><use href="#d-heart"/></svg>
+      <svg class="dd" style="bottom:10%;left:2%"><use href="#d-spiral"/></svg>
+    </div>
+    <div class="wrap">
+      <div class="sec-head"><h2 class="display" id="roles-title">Recent roles</h2><svg class="squiggle" aria-hidden="true"><use href="#squiggle"/></svg></div>
+      <ul class="roles-list">
+        <li class="role"><a href="https://www.imdb.com/title/tt41379668/" rel="noopener"><span class="role-poster"><img srcset="assets/featured/super-system-400.webp 400w, assets/featured/super-system.webp 824w" sizes="(max-width: 760px) 44vw, 268px" src="assets/featured/super-system.webp" alt="Super System Gets Me 3 Girls poster" loading="lazy" decoding="async" width="824" height="1080"><span class="role-as">as Toby</span></span><span class="role-title">Super System Gets Me 3 Girls</span><span class="role-meta"><span>Vertical drama &middot; 2026</span><b>IMDb &#8599;</b></span></a></li>
+        <li class="role"><a href="https://www.imdb.com/title/tt37284394/" rel="noopener"><span class="role-poster"><img srcset="assets/featured/sleeping-beauty-400.webp 400w, assets/featured/sleeping-beauty.webp 600w" sizes="(max-width: 760px) 43vw, 265px" src="assets/featured/sleeping-beauty.webp" alt="Sleeping Beauty and Three Brothers poster" loading="lazy" decoding="async" width="600" height="797"><span class="role-as">as Zeke</span></span><span class="role-title">Sleeping Beauty and Three Brothers</span><span class="role-meta"><span>Vertical drama &middot; 2025</span><b>IMDb &#8599;</b></span></a></li>
+        <li class="role"><a href="https://www.imdb.com/title/tt38558185/" rel="noopener"><span class="role-poster"><img src="assets/featured/fated-luna.webp" alt="The Scent of My Fated Luna poster" loading="lazy" decoding="async" width="600" height="762"><span class="role-as">as Liam</span></span><span class="role-title">The Scent of My Fated Luna</span><span class="role-meta"><span>Vertical drama &middot; 2025</span><b>IMDb &#8599;</b></span></a></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="headshots" aria-labelledby="shots-title">
+    <div class="wrap">
+      <div class="sec-head"><h2 class="display" id="shots-title">Headshots</h2><svg class="squiggle" aria-hidden="true"><use href="#squiggle"/></svg></div>
+      <div class="booth">
+        <ul>
+          <li><button type="button"><img srcset="assets/photos/headshot-0-00-400.webp 400w, assets/photos/headshot-0-00-800.webp 800w, assets/photos/headshot-0-00.webp 960w" sizes="(max-width: 760px) 74vw, 338px" src="assets/photos/headshot-0-00.webp" alt="Smiling, white T-shirt" loading="lazy" decoding="async" width="960" height="1200"></button></li>
+          <li><button type="button"><img srcset="assets/photos/headshot-0-01-400.webp 400w, assets/photos/headshot-0-01-800.webp 800w, assets/photos/headshot-0-01.webp 960w" sizes="(max-width: 760px) 74vw, 338px" src="assets/photos/headshot-0-01.webp" alt="Chin on hand, palm-print shirt" loading="lazy" decoding="async" width="960" height="1200"></button></li>
+          <li><button type="button"><img srcset="assets/photos/headshot-0-02-400.webp 400w, assets/photos/headshot-0-02-800.webp 800w, assets/photos/headshot-0-02.webp 960w" sizes="(max-width: 760px) 74vw, 338px" src="assets/photos/headshot-0-02.webp" alt="Serious, half in shadow" loading="lazy" decoding="async" width="960" height="1200"></button></li>
+        </ul>
+        <p>open any frame full size</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="credits" aria-labelledby="credits-title">
+    <div class="doodles" aria-hidden="true">
+      <svg class="dd" style="top:5%;right:8%"><use href="#d-spark"/></svg>
+      <svg class="dd" style="bottom:6%;right:3%"><use href="#d-smile"/></svg>
+    </div>
+    <div class="wrap">
+      <div class="sec-head"><h2 class="display" id="credits-title">Credits</h2><svg class="squiggle" aria-hidden="true"><use href="#squiggle"/></svg></div>
+      <div class="credits">
+        <div class="credit-keep"><h3>Vertical drama</h3><div class="credit"><span class="credit-title">Super System Gets Me 3 Girls</span><span class="credit-role">Toby</span><span class="credit-year">2026</span></div></div>
+        <div class="credit"><span class="credit-title">Heiress&rsquo;s Ballet Revenge</span><span class="credit-role">Jeffrey&rsquo;s Assistant</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Mission: To Love the Enemy</span><span class="credit-role">Cast</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">The Scent of My Fated Luna</span><span class="credit-role">Liam Dawson</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Sleeping Beauty and Three Brothers</span><span class="credit-role">Zeke Newsome</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Breaking Chains for a New Life</span><span class="credit-role">Daniel Foster</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">One Night Stand with My Stepbrother</span><span class="credit-role">Lucian</span><span class="credit-year">2025</span></div>
+        <div class="credit"><span class="credit-title">Billionaire Twins: Daddy, Please Take Mommy</span><span class="credit-role">Liam</span><span class="credit-year">2024</span></div>
+        <div class="credit"><span class="credit-title">Flash Marriage with the Secret Heiress</span><span class="credit-role">Tom Astor</span><span class="credit-year">2024</span></div>
+        <div class="credit"><span class="credit-title">My Poor Ex-Wife Is a Heiress</span><span class="credit-role">Lewis</span><span class="credit-year">2024</span></div>
+        <div class="credit-keep"><h3>Series</h3><div class="credit"><span class="credit-title">Love Beyond Sight</span><span class="credit-role">Jason</span><span class="credit-year">2026</span></div></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer" id="contact">
+  <div class="wrap">
+    <h2 class="display">Casting &amp; bookings</h2>
+    <div class="foot-grid">
+      <div>
+        <a class="pill" href="https://ig.me/m/nstephens_" rel="noopener"><svg class="ig" viewBox="0 0 24 24" aria-hidden="true"><use href="#ig"/></svg>Message @nstephens_</a>
+        <p class="foot-note">The quickest way to reach me is an Instagram message.</p>
+      </div>
+      <div>
+        <h3>Profiles</h3>
+        <ul>
+          <li><a href="https://www.imdb.com/name/nm16109049/" rel="noopener">IMDb</a></li>
+          <li><a href="https://www.instagram.com/nstephens_/" rel="noopener">Instagram</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="colophon">&copy; 2026 Noah Stephens<span class="built-by">Built by Harrison Keen, <a href="https://harrisonkeen.tech" rel="noopener">harrisonkeen.tech</a></span></p>
+  </div>
+</footer>
+
+<dialog class="lightbox" aria-label="Photo viewer">
+  <img alt="">
+  <button class="lightbox-step prev" aria-label="Previous photo">&lsaquo;</button>
+  <button class="lightbox-step next" aria-label="Next photo">&rsaquo;</button>
+  <button class="lightbox-close" aria-label="Close">&times;</button>
+</dialog>
+
+<script>
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Hero name: split into letters for the hop-in, then size it so the longer line fills the left half
+  const name = document.querySelector('.name');
+  const lines = [...name.querySelectorAll('.line')];
+  let i = 0;
+  lines.forEach(l => {
+    const word = l.textContent;
+    l.setAttribute('aria-hidden', 'true');
+    l.replaceChildren(...[...word].map(c => { const s = document.createElement('span'); s.className = 'ch'; s.textContent = c; s.style.setProperty('--i', i++); return s; }));
+  });
+  name.setAttribute('aria-label', 'Noah Stephens');
+  function layoutHero() {
+    const vw = root.clientWidth;
+    const gutter = Math.max(16, Math.min(vw * .05, 72));
+    const target = vw <= 700 ? vw - 2 * gutter : vw * .5 - gutter;
+    name.style.fontSize = '100px';
+    const width = Math.max(...lines.map(l => l.getBoundingClientRect().width + (l.previousElementSibling ? parseFloat(getComputedStyle(l).marginLeft) : 0)));
+    name.style.fontSize = Math.min(100 * target / width, 230) + 'px';
+    placeMarks();
+  }
+
+  // Marker: points are fractions of the photo itself; map them through object-fit: cover to the box
+  const marks = document.querySelector('.marks');
+  const arrow = marks.querySelector('.arrow'), head = marks.querySelector('.head'), gleam = marks.querySelector('.gleam');
+  const label = marks.querySelector('.mark-label');
+  function placeMarks() {
+    const img = [...document.querySelectorAll('.hero-photo img')].find(m => getComputedStyle(m).display !== 'none');
+    if (!img) return;
+    const box = img.getBoundingClientRect(), w = box.width, h = box.height;
+    const nw = img.naturalWidth || +img.getAttribute('width'), nh = img.naturalHeight || +img.getAttribute('height');
+    const s = Math.max(w / nw, h / nh), dw = nw * s, dh = nh * s;
+    const [px, py] = getComputedStyle(img).objectPosition.split(' ').map(v => parseFloat(v) / 100);
+    const ox = (w - dw) * px, oy = (h - dh) * py;
+    const pt = attr => { const v = img.dataset[attr]; if (!v) return null; const [fx, fy] = v.split(',').map(Number); return [ox + fx * dw, oy + fy * dh]; };
+    const face = pt('face'), lab = pt('label'), gl = pt('gleam');
+    // keep the label on screen on narrow phones
+    const lx = Math.min(Math.max(lab[0], 70), w - 70), ly = Math.max(lab[1], 64);
+    label.style.left = lx + 'px'; label.style.top = ly + 'px';
+    // the arrow leaves from under the label and curves down onto him
+    const sx = lx - 18, sy = ly + 14, ex = face[0], ey = face[1];
+    const cx = (sx + ex) / 2 + 30, cy = Math.max(sy, ey) + 26;
+    arrow.setAttribute('d', `M${sx} ${sy} Q${cx} ${cy} ${ex} ${ey}`);
+    const a = Math.atan2(ey - cy, ex - cx), L = 16;
+    const p1 = [ex - L * Math.cos(a - .5), ey - L * Math.sin(a - .5)], p2 = [ex - L * Math.cos(a + .5), ey - L * Math.sin(a + .5)];
+    head.setAttribute('d', `M${p1[0]} ${p1[1]} L${ex} ${ey} L${p2[0]} ${p2[1]}`);
+    marks.classList.toggle('no-gleam', !gl);
+    if (gl) {
+      const r = Math.max(9, Math.min(w * .022, 15)), [gx, gy] = gl;
+      gleam.setAttribute('d', `M${gx} ${gy - r} C${gx + r * .15} ${gy - r * .15} ${gx + r * .15} ${gy - r * .15} ${gx + r} ${gy} C${gx + r * .15} ${gy + r * .15} ${gx + r * .15} ${gy + r * .15} ${gx} ${gy + r} C${gx - r * .15} ${gy + r * .15} ${gx - r * .15} ${gy + r * .15} ${gx - r} ${gy} C${gx - r * .15} ${gy - r * .15} ${gx - r * .15} ${gy - r * .15} ${gx} ${gy - r} Z`);
+    }
+  }
+  layoutHero();
+  document.fonts.ready.then(layoutHero);
+  document.querySelectorAll('.hero-photo img').forEach(m => m.addEventListener('load', placeMarks));
+  addEventListener('resize', layoutHero);
+
+  // Letters lean toward the pointer once they've landed
+  const letters = [...name.querySelectorAll('.ch')];
+  let landed = reduce;
+  if (!reduce) letters.at(-1).addEventListener('animationend', () => { landed = true; letters.forEach(c => c.style.animation = 'none'); clearDoodles(); }, { once: true });
+  const hero = document.querySelector('.hero');
+  let centres = [], leanFrame = 0;
+  hero.addEventListener('pointerenter', () => {
+    letters.forEach(c => c.style.transform = '');
+    centres = letters.map(c => { const r = c.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2 + scrollY]; });
+  });
+  hero.addEventListener('pointermove', e => {
+    if (reduce || !landed || leanFrame || e.pointerType !== 'mouse') return;
+    leanFrame = requestAnimationFrame(() => {
+      leanFrame = 0;
+      letters.forEach((c, n) => {
+        const dx = e.clientX - centres[n][0], dy = e.clientY + scrollY - centres[n][1];
+        const pull = Math.max(0, 1 - Math.hypot(dx, dy) / 300);
+        c.style.transform = `translate(${dx * pull * .14}px, ${dy * pull * .14}px) rotate(${dx * pull * .035}deg)`;
+      });
+    });
+  });
+  hero.addEventListener('pointerleave', () => letters.forEach(c => c.style.transform = ''));
+
+  // Faint doodles never sit behind the name or a heading
+  function clearDoodles() {
+    const pad = 16;
+    const keep = [...name.querySelectorAll('.line'), ...document.querySelectorAll('.sec-head h2')].flatMap(e => {
+      const r = document.createRange(); r.selectNodeContents(e); return [...r.getClientRects()];
+    });
+    document.querySelectorAll('.dd').forEach(d => {
+      d.style.visibility = '';
+      const r = d.getBoundingClientRect();
+      if (!r.width) return;
+      if (keep.some(k => r.right > k.left - pad && r.left < k.right + pad && r.bottom > k.top - pad && r.top < k.bottom + pad)) d.style.visibility = 'hidden';
+    });
+  }
+  addEventListener('resize', clearDoodles);
+  document.fonts.ready.then(clearDoodles);
+
+  // Scenes: switch between the two demo scenes
+  const player = document.getElementById('player');
+  const reel = document.getElementById('reel');
+  const tabs = document.querySelectorAll('.reel-tabs button');
+  const start = () => { reel.classList.add('played'); player.controls = true; player.play().catch(() => {}); };
+  reel.querySelector('.reel-start').addEventListener('click', start);
+  player.addEventListener('playing', () => reel.classList.add('playing'));
+  ['pause', 'ended', 'emptied'].forEach(e => player.addEventListener(e, () => reel.classList.remove('playing')));
+  new IntersectionObserver(([e]) => { if (!e.isIntersecting && !player.paused) player.pause(); }).observe(player);
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    if (tab.getAttribute('aria-selected') === 'true') return start();
+    tabs.forEach(t => t.setAttribute('aria-selected', t === tab));
+    player.pause();
+    if (root.dataset.reel === 'tv' && !reduce) {
+      const screen = player.parentElement;
+      screen.classList.add('static');
+      setTimeout(() => screen.classList.remove('static'), 420);
+    }
+    player.poster = tab.dataset.poster;
+    player.src = tab.dataset.src;
+    start();
+  }));
+
+  // Headshots lightbox
+  const frames = [...document.querySelectorAll('.booth button')];
+  const box = document.querySelector('.lightbox');
+  const big = box.querySelector('img');
+  let at = 0;
+  const show = n => { at = (n + frames.length) % frames.length; const img = frames[at].querySelector('img'); big.src = img.src; big.alt = img.alt; };
+  frames.forEach((c, n) => c.addEventListener('click', () => { show(n); box.showModal(); document.body.classList.add('locked'); }));
+  box.addEventListener('close', () => document.body.classList.remove('locked'));
+  box.querySelector('.prev').addEventListener('click', () => show(at - 1));
+  box.querySelector('.next').addEventListener('click', () => show(at + 1));
+  box.querySelector('.lightbox-close').addEventListener('click', () => box.close());
+  box.addEventListener('click', e => { if (e.target === box) box.close(); });
+  box.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') show(at - 1); if (e.key === 'ArrowRight') show(at + 1); });
+  // swipe left / right between photos on a touch screen
+  let sx0 = null, sy0 = 0;
+  box.addEventListener('touchstart', e => { if (e.touches.length === 1) { sx0 = e.touches[0].clientX; sy0 = e.touches[0].clientY; } else sx0 = null; }, { passive: true });
+  box.addEventListener('touchend', e => { if (sx0 === null) return; const t = e.changedTouches[0], dx = t.clientX - sx0, dy = t.clientY - sy0; sx0 = null;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) show(at + (dx < 0 ? 1 : -1)); }, { passive: true });
+
+  // Credits: balanced columns that end on the same line (breaks between categories preferred)
+  const credits = document.querySelector('.credits');
+  const rows = [...credits.children];
+  const el = (tag, className) => { const e = document.createElement(tag); e.className = className; return e; };
+  const colCount = () => credits.parentElement.clientWidth > 620 ? 2 : 1;
+  function layoutCredits() {
+    const n = colCount();
+    credits.style.setProperty('--cols', n);
+    const cols = Array.from({ length: n }, () => el('div', 'credit-col'));
+    cols[0].append(...rows);
+    credits.replaceChildren(...cols);
+    if (n === 1) return;
+    const h = rows.map(r => r.offsetHeight);
+    const sum = (a, b) => h.slice(a, b).reduce((x, y) => x + y, 0);
+    let best = null;
+    for (let a = 1; a < rows.length; a++) {
+      const score = Math.max(sum(0, a), sum(a, rows.length)) + (rows[a].classList.contains('credit-keep') ? 0 : 40);
+      if (!best || score <= best.score) best = { score, a };
+    }
+    cols[0].replaceChildren(...rows.slice(0, best.a));
+    cols[1].replaceChildren(...rows.slice(best.a));
+  }
+  layoutCredits();
+  let lastCols = colCount();
+  addEventListener('resize', () => { if (colCount() !== lastCols) { lastCols = colCount(); layoutCredits(); } });
+  document.fonts.ready.then(layoutCredits);
+
+  // Dark footer: past halfway, colour the page behind it so the overscroll strip matches
+  const atEnd = () => root.classList.toggle('at-end', scrollY > (root.scrollHeight - innerHeight) / 2);
+  addEventListener('scroll', atEnd, { passive: true }); atEnd();
+
+  // Cursor sparkles (option, mouse only)
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  let lastSpark = 0;
+  addEventListener('pointermove', e => {
+    if (root.dataset.cursor !== 'sparkle' || reduce || e.pointerType !== 'mouse' || e.timeStamp - lastSpark < 45) return;
+    lastSpark = e.timeStamp;
+    const s = document.createElementNS(SVGNS, 'svg');
+    s.setAttribute('class', 'spark');
+    s.style.color = getComputedStyle(root).getPropertyValue(Math.random() < .5 ? '--accent' : '--band');
+    const u = document.createElementNS(SVGNS, 'use'); u.setAttribute('href', '#d-spark'); s.append(u);
+    document.body.append(s);
+    const dx = (Math.random() - .5) * 40, dy = 14 + Math.random() * 26;
+    s.animate([
+      { transform: `translate(${e.clientX}px, ${e.clientY}px) scale(1)`, opacity: 1 },
+      { transform: `translate(${e.clientX + dx}px, ${e.clientY + dy}px) scale(0) rotate(160deg)`, opacity: .6 }
+    ], { duration: 700, easing: 'ease-out' }).onfinish = () => s.remove();
+  });
+
+  // once the web fonts land, re-measure the name and the credit columns
+  document.fonts.ready.then(() => { layoutHero(); lastCols = colCount(); layoutCredits(); clearDoodles(); });
+</script>
+</body>
+</html>
